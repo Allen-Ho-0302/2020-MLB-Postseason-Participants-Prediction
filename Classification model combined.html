@@ -13077,8 +13077,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1>2020 MLB Postseason Participants Prediction<br></h1>
 <h1>Introduction<br></h1>
-<p>2020 MLB season has already been hard to predict given it's short nature. This research aims to build a perfect model using team batting stats of the past eight years and then use the model to predict which teams' stats on 08/13/2020 is worthy of getting into postseason on a traditional 10-team postseason format.<br></p>
+<p>2020 MLB season has already been hard to predict given it's short nature. This research aims to build a perfect model using team batting stats of the past eight years and then use the model to predict which teams' batting stats on 08/13/2020 is worthy of getting into postseason on a traditional 10-team postseason format.<br></p>
 <h1>Methods<br></h1>
 <p>Model was built using the combination of 16 team regular season stats:PA, R, H, 2B, 3B, HR, RBI, SB, CS, BB, SO, BA, OBP, SLG, OPS, TB from 2012-2019 and whether that corresponding team went into postseason or not.<br></p>
 <p>Using SQL Server and Python<br></p>
@@ -13087,7 +13088,8 @@ k-nearest neighbors<br>
 support vector machine<br>
 decision tree<br>
 random forest<br>
-gradient boosting<br></p>
+gradient boosting<br>
+XGBoost</p>
 
 </div>
 </div>
@@ -13279,13 +13281,175 @@ total rows are 8(years)*20(teams each year)=160</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Train-the-Models">Step 2: Train the Models<a class="anchor-link" href="#Step-2:-Train-the-Models">&#182;</a></h2>
+<p>Take a brief look at the summary</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df_com</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>                PA           R            H          HR         RBI  \
+count   240.000000  240.000000   240.000000  240.000000  240.000000   
+mean   6158.929167  712.929167  1397.520833  178.191667  679.350000   
+std      97.271646   77.051138    71.511707   40.684477   75.512603   
+min    5905.000000  513.000000  1199.000000   95.000000  485.000000   
+25%    6085.250000  652.500000  1346.000000  148.000000  622.500000   
+50%    6154.500000  709.500000  1390.500000  174.500000  675.000000   
+75%    6224.250000  761.000000  1446.000000  211.000000  728.000000   
+max    6475.000000  943.000000  1625.000000  307.000000  906.000000   
+
+              SB          CS          BB           SO          BA         OBP  \
+count  240.00000  240.000000  240.000000   240.000000  240.000000  240.000000   
+mean    87.53750   33.195833  499.750000  1296.412500    0.252933    0.319117   
+std     28.46018    8.737884   63.716652   130.141413    0.010588    0.011853   
+min     19.00000   10.000000  375.000000   973.000000    0.226000    0.292000   
+25%     66.00000   27.000000  452.000000  1204.000000    0.245000    0.311000   
+50%     86.00000   33.000000  500.000000  1290.500000    0.252000    0.319000   
+75%    105.25000   38.250000  545.500000  1384.500000    0.260000    0.327000   
+max    181.00000   61.000000  656.000000  1595.000000    0.283000    0.352000   
+
+              SLG         OPS           TB        POST  
+count  240.000000  240.000000   240.000000  240.000000  
+mean     0.409925    0.729004  2264.937500    0.333333  
+std      0.026815    0.036499   163.359296    0.472390  
+min      0.335000    0.627000  1810.000000    0.000000  
+25%      0.391000    0.702750  2152.500000    0.000000  
+50%      0.409000    0.728000  2256.500000    0.000000  
+75%      0.428250    0.752000  2364.000000    1.000000  
+max      0.495000    0.848000  2832.000000    1.000000  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Take a brief look at the correlation table</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_corr</span> <span class="o">=</span> <span class="n">df_com</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_corr</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>            PA         R         H        HR       RBI        SB        CS  \
+PA    1.000000  0.728568  0.603097  0.404630  0.724551 -0.075825 -0.275590   
+R     0.728568  1.000000  0.627253  0.757987  0.996604 -0.077307 -0.286587   
+H     0.603097  0.627253  1.000000  0.168541  0.622822  0.010873 -0.096667   
+HR    0.404630  0.757987  0.168541  1.000000  0.773527 -0.226804 -0.338698   
+RBI   0.724551  0.996604  0.622822  0.773527  1.000000 -0.101979 -0.300592   
+SB   -0.075825 -0.077307  0.010873 -0.226804 -0.101979  1.000000  0.563940   
+CS   -0.275590 -0.286587 -0.096667 -0.338698 -0.300592  0.563940  1.000000   
+BB    0.672470  0.572770  0.031033  0.490024  0.570726 -0.060325 -0.240242   
+SO    0.004639  0.060778 -0.417156  0.423937  0.068943 -0.128711 -0.030335   
+BA    0.512469  0.614537  0.978840  0.149331  0.609907  0.044830 -0.045988   
+OBP   0.790239  0.828347  0.741023  0.438346  0.823876 -0.004032 -0.162219   
+SLG   0.582243  0.922851  0.598798  0.864843  0.931042 -0.141123 -0.270421   
+OPS   0.685823  0.948734  0.681851  0.779146  0.953297 -0.105815 -0.251054   
+TB    0.658199  0.926030  0.685324  0.816982  0.933121 -0.148223 -0.286691   
+POST  0.461904  0.488744  0.339784  0.281205  0.481147 -0.079983 -0.224696   
+
+            BB        SO        BA       OBP       SLG       OPS        TB  \
+PA    0.672470  0.004639  0.512469  0.790239  0.582243  0.685823  0.658199   
+R     0.572770  0.060778  0.614537  0.828347  0.922851  0.948734  0.926030   
+H     0.031033 -0.417156  0.978840  0.741023  0.598798  0.681851  0.685324   
+HR    0.490024  0.423937  0.149331  0.438346  0.864843  0.779146  0.816982   
+RBI   0.570726  0.068943  0.609907  0.823876  0.931042  0.953297  0.933121   
+SB   -0.060325 -0.128711  0.044830 -0.004032 -0.141123 -0.105815 -0.148223   
+CS   -0.240242 -0.030335 -0.045988 -0.162219 -0.270421 -0.251054 -0.286691   
+BB    1.000000  0.236172  0.035724  0.647519  0.440775  0.534829  0.400129   
+SO    0.236172  1.000000 -0.463401 -0.188190  0.143080  0.044561  0.101463   
+BA    0.035724 -0.463401  1.000000  0.769802  0.595888  0.688866  0.655888   
+OBP   0.647519 -0.188190  0.769802  1.000000  0.735855  0.866479  0.746457   
+SLG   0.440775  0.143080  0.595888  0.735855  1.000000  0.975517  0.985919   
+OPS   0.534829  0.044561  0.688866  0.866479  0.975517  1.000000  0.968787   
+TB    0.400129  0.101463  0.655888  0.746457  0.985919  0.968787  1.000000   
+POST  0.431907 -0.105900  0.356648  0.546741  0.405289  0.477010  0.403341   
+
+          POST  
+PA    0.461904  
+R     0.488744  
+H     0.339784  
+HR    0.281205  
+RBI   0.481147  
+SB   -0.079983  
+CS   -0.224696  
+BB    0.431907  
+SO   -0.105900  
+BA    0.356648  
+OBP   0.546741  
+SLG   0.405289  
+OPS   0.477010  
+TB    0.403341  
+POST  1.000000  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-2:-Train-the-Models">Step 2: Train the Models<a class="anchor-link" href="#Step-2:-Train-the-Models">&#182;</a></h2><p>There's one other consideration worth making -- the distribution of outcomes is somewhat imbalanced. Teams getting into postseason each year are less than those not. I tried an oversampling technique to see how it affected the models. Oversampling techniques are usually applied to datasets where an outcome is significantly less common. That might be a little bit of a stretch for this scenario, but I think it's worth at least checking if an oversampling technique would help. I tried fitting my different models twice -- with and without oversampling. For oversampling, I used SMOTE (synthetic minority oversampling technique).<br></p>
+<p>use 4 metrics to evaluate the models, which together should give a good picture of the best overall model:<br></p>
+<p>F1 score (weighted by instances of each label)
+ROC AUC (computed by label and weighted by frequency)
+balanced accuracy (for imbalanced datasets)
+log loss</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -13305,7 +13469,7 @@ total rows are 8(years)*20(teams each year)=160</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
@@ -13387,7 +13551,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:144: Fut
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
@@ -13456,6 +13620,16 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
 </pre>
 </div>
 </div>
@@ -13466,7 +13640,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Logistic Regression = 0.007 min.
+<pre>Time to cross-validate Logistic Regression = 0.004 min.
 Time to cross-validate KNN = 0.002 min.
 </pre>
 </div>
@@ -13494,8 +13668,6 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
 </pre>
 </div>
 </div>
@@ -13507,7 +13679,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Time to cross-validate SVM = 0.002 min.
-Time to cross-validate Decision Tree = 0.001 min.
+Time to cross-validate Decision Tree = 0.002 min.
 </pre>
 </div>
 </div>
@@ -13526,14 +13698,6 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
 </pre>
 </div>
 </div>
@@ -13544,38 +13708,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Random Forest = 0.027 min.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Gradient Boosting = 0.018 min.
+<pre>Time to cross-validate Random Forest = 0.026 min.
 </pre>
 </div>
 </div>
@@ -13606,7 +13739,38 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate XGBClassifier = 0.008 min.
+<pre>Time to cross-validate Gradient Boosting = 0.019 min.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Time to cross-validate XGBClassifier = 0.009 min.
 </pre>
 </div>
 </div>
@@ -13647,58 +13811,58 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
     <tr>
       <th>0</th>
       <td>Logistic Regression</td>
-      <td>0.705002</td>
-      <td>0.706250</td>
-      <td>0.832812</td>
-      <td>-0.535090</td>
+      <td>0.718629</td>
+      <td>0.721875</td>
+      <td>0.827734</td>
+      <td>-0.536031</td>
     </tr>
     <tr>
       <th>1</th>
       <td>KNN</td>
-      <td>0.669356</td>
-      <td>0.696875</td>
-      <td>0.835547</td>
-      <td>-0.574364</td>
+      <td>0.658151</td>
+      <td>0.684375</td>
+      <td>0.824414</td>
+      <td>-0.578825</td>
     </tr>
     <tr>
       <th>2</th>
       <td>SVM</td>
-      <td>0.639647</td>
-      <td>0.631250</td>
-      <td>0.741797</td>
-      <td>-0.611696</td>
+      <td>0.647821</td>
+      <td>0.634375</td>
+      <td>0.742578</td>
+      <td>-0.609196</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Decision Tree</td>
-      <td>0.714471</td>
-      <td>0.687500</td>
-      <td>0.687500</td>
-      <td>-9.642188</td>
+      <td>0.671690</td>
+      <td>0.637500</td>
+      <td>0.637500</td>
+      <td>-11.225236</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Random Forest</td>
-      <td>0.728670</td>
+      <td>0.727879</td>
       <td>0.712500</td>
-      <td>0.807813</td>
-      <td>-0.559156</td>
+      <td>0.813672</td>
+      <td>-0.545912</td>
     </tr>
     <tr>
       <th>5</th>
       <td>Gradient Boosting</td>
-      <td>0.709187</td>
+      <td>0.708470</td>
       <td>0.690625</td>
-      <td>0.789062</td>
-      <td>-0.628873</td>
+      <td>0.780078</td>
+      <td>-0.679895</td>
     </tr>
     <tr>
       <th>6</th>
       <td>XGBClassifier</td>
-      <td>0.733194</td>
+      <td>0.734760</td>
       <td>0.721875</td>
-      <td>0.774219</td>
-      <td>-0.638473</td>
+      <td>0.785547</td>
+      <td>-0.617131</td>
     </tr>
   </tbody>
 </table>
@@ -13713,10 +13877,11 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span> <span class="k">as</span> <span class="nn">time</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span> <span class="k">as</span> <span class="nn">time</span>
 <span class="n">f1</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">roc_auc</span><span class="p">,</span> <span class="n">log_loss</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">clf</span><span class="p">,</span> <span class="n">clf_nm</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">classifiers</span><span class="p">,</span> <span class="n">clf_names</span><span class="p">):</span>
 
@@ -13758,11 +13923,11 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Time to cross-validate Logistic Regression = 0.003 min.
-Time to cross-validate KNN = 0.001 min.
-Time to cross-validate SVM = 0.001 min.
+Time to cross-validate KNN = 0.002 min.
+Time to cross-validate SVM = 0.002 min.
 Time to cross-validate Decision Tree = 0.001 min.
-Time to cross-validate Random Forest = 0.027 min.
-Time to cross-validate Gradient Boosting = 0.017 min.
+Time to cross-validate Random Forest = 0.035 min.
+Time to cross-validate Gradient Boosting = 0.018 min.
 Time to cross-validate XGBClassifier = 0.005 min.
 </pre>
 </div>
@@ -13823,31 +13988,31 @@ Time to cross-validate XGBClassifier = 0.005 min.
       <td>0.731454</td>
       <td>0.684375</td>
       <td>0.751563</td>
-      <td>-0.548995</td>
+      <td>-0.547907</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Decision Tree</td>
-      <td>0.684726</td>
-      <td>0.650000</td>
-      <td>0.650000</td>
-      <td>-10.649576</td>
+      <td>0.674239</td>
+      <td>0.643750</td>
+      <td>0.643750</td>
+      <td>-10.937406</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Random Forest</td>
-      <td>0.708330</td>
-      <td>0.671875</td>
-      <td>0.805859</td>
-      <td>-0.535242</td>
+      <td>0.712223</td>
+      <td>0.675000</td>
+      <td>0.803516</td>
+      <td>-0.539415</td>
     </tr>
     <tr>
       <th>5</th>
       <td>Gradient Boosting</td>
-      <td>0.727597</td>
-      <td>0.696875</td>
-      <td>0.792969</td>
-      <td>-0.623737</td>
+      <td>0.723963</td>
+      <td>0.693750</td>
+      <td>0.792578</td>
+      <td>-0.626625</td>
     </tr>
     <tr>
       <th>6</th>
@@ -13888,10 +14053,10 @@ Time to cross-validate XGBClassifier = 0.005 min.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
 </pre></div>
 
@@ -13905,14 +14070,14 @@ Time to cross-validate XGBClassifier = 0.005 min.
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=10000,
+                   intercept_scaling=1, l1_ratio=None, max_iter=100,
                    multi_class=&#39;multinomial&#39;, n_jobs=None, penalty=&#39;l2&#39;,
                    random_state=None, solver=&#39;lbfgs&#39;, tol=0.0001, verbose=0,
                    warm_start=False)</pre>
@@ -13926,23 +14091,58 @@ Time to cross-validate XGBClassifier = 0.005 min.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 0.20563564,  0.35558267, -0.43472342, -0.07174802, -0.16508224,
+        -0.01143693, -0.18435707,  0.00724   , -0.18083768,  0.20025544,
+         0.54154686,  0.04143439,  0.35595693, -0.26669742]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_2020</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\allen\Desktop\Baseball research\Postseason or bust\2020 projection for 0813.xlsx&#39;</span><span class="p">)</span>
-<span class="n">df_2020</span><span class="o">=</span><span class="n">df_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;PA162&#39;</span><span class="p">,</span> <span class="s1">&#39;R162&#39;</span><span class="p">,</span> <span class="s1">&#39;H162&#39;</span><span class="p">,</span> <span class="s1">&#39;HR162&#39;</span><span class="p">,</span> <span class="s1">&#39;RBI162&#39;</span><span class="p">,</span> <span class="s1">&#39;SB162&#39;</span><span class="p">,</span> <span class="s1">&#39;CS162&#39;</span><span class="p">,</span> <span class="s1">&#39;BB162&#39;</span><span class="p">,</span> <span class="s1">&#39;SO162&#39;</span><span class="p">,</span> <span class="s1">&#39;BA&#39;</span><span class="p">,</span> <span class="s1">&#39;OBP&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">,</span> <span class="s1">&#39;TB162&#39;</span><span class="p">]]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;PA&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;PA162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;R162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;H162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;HR162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;RBI&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;RBI162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;SB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;SB162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;CS&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;CS162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;BB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;BB162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;SO&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;SO162&#39;</span><span class="p">]</span>
-<span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;TB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;TB162&#39;</span><span class="p">]</span>
-<span class="n">DF_2020</span><span class="o">=</span><span class="n">df_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="s1">&#39;HR&#39;</span><span class="p">,</span><span class="s1">&#39;RBI&#39;</span><span class="p">,</span><span class="s1">&#39;SB&#39;</span><span class="p">,</span><span class="s1">&#39;CS&#39;</span><span class="p">,</span><span class="s1">&#39;BB&#39;</span><span class="p">,</span><span class="s1">&#39;SO&#39;</span><span class="p">,</span><span class="s1">&#39;BA&#39;</span><span class="p">,</span><span class="s1">&#39;OBP&#39;</span><span class="p">,</span><span class="s1">&#39;SLG&#39;</span><span class="p">,</span><span class="s1">&#39;OPS&#39;</span><span class="p">,</span><span class="s1">&#39;TB&#39;</span><span class="p">]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_2020</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">DF_2020</span><span class="o">=</span><span class="n">df_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;PA162&#39;</span><span class="p">,</span> <span class="s1">&#39;R162&#39;</span><span class="p">,</span> <span class="s1">&#39;H162&#39;</span><span class="p">,</span> <span class="s1">&#39;HR162&#39;</span><span class="p">,</span> <span class="s1">&#39;RBI162&#39;</span><span class="p">,</span> <span class="s1">&#39;SB162&#39;</span><span class="p">,</span> <span class="s1">&#39;CS162&#39;</span><span class="p">,</span> <span class="s1">&#39;BB162&#39;</span><span class="p">,</span> <span class="s1">&#39;SO162&#39;</span><span class="p">,</span> <span class="s1">&#39;BA&#39;</span><span class="p">,</span> <span class="s1">&#39;OBP&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">,</span> <span class="s1">&#39;TB162&#39;</span><span class="p">]]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;PA&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;PA162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;R162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;H162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;HR162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;RBI&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;RBI162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;SB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;SB162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;CS&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;CS162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;BB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;BB162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;SO&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;SO162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;TB&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">DF_2020</span><span class="p">[</span><span class="s1">&#39;TB162&#39;</span><span class="p">]</span>
+<span class="n">DF_2020</span><span class="o">=</span><span class="n">DF_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="s1">&#39;HR&#39;</span><span class="p">,</span><span class="s1">&#39;RBI&#39;</span><span class="p">,</span><span class="s1">&#39;SB&#39;</span><span class="p">,</span><span class="s1">&#39;CS&#39;</span><span class="p">,</span><span class="s1">&#39;BB&#39;</span><span class="p">,</span><span class="s1">&#39;SO&#39;</span><span class="p">,</span><span class="s1">&#39;BA&#39;</span><span class="p">,</span><span class="s1">&#39;OBP&#39;</span><span class="p">,</span><span class="s1">&#39;SLG&#39;</span><span class="p">,</span><span class="s1">&#39;OPS&#39;</span><span class="p">,</span><span class="s1">&#39;TB&#39;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">DF_2020</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13959,35 +14159,19 @@ Time to cross-validate XGBClassifier = 0.005 min.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>         PA162        R162         H162       HR162      RBI162      SB162  \
+<pre>            PA           R            H          HR         RBI         SB  \
 0  6096.315789  750.315789  1347.157895  127.894737  707.684211  34.105263   
 1  5977.800000  842.400000  1312.200000  226.800000  826.200000  64.800000   
 2  6111.000000  864.000000  1467.000000  243.000000  846.000000  63.000000   
 3  6096.315789  724.736842  1415.368421  196.105263  682.105263  34.105263   
 4  6176.250000  840.375000  1296.000000  232.875000  789.750000  50.625000   
 
-       CS162       BB162        SO162     BA  ...           PA           R  \
-0  25.578947  477.473684  1219.263158  0.245  ...  6096.315789  750.315789   
-1  24.300000  526.500000  1644.300000  0.244  ...  5977.800000  842.400000   
-2  45.000000  513.000000  1305.000000  0.269  ...  6111.000000  864.000000   
-3  25.578947  426.315789  1492.105263  0.254  ...  6096.315789  724.736842   
-4  10.125000  658.125000  1620.000000  0.244  ...  6176.250000  840.375000   
-
-             H          HR         RBI         SB         CS          BB  \
-0  1347.157895  127.894737  707.684211  34.105263  25.578947  477.473684   
-1  1312.200000  226.800000  826.200000  64.800000  24.300000  526.500000   
-2  1467.000000  243.000000  846.000000  63.000000  45.000000  513.000000   
-3  1415.368421  196.105263  682.105263  34.105263  25.578947  426.315789   
-4  1296.000000  232.875000  789.750000  50.625000  10.125000  658.125000   
-
-            SO           TB  
-0  1219.263158  2097.473684  
-1  1644.300000  2349.000000  
-2  1305.000000  2583.000000  
-3  1492.105263  2353.263158  
-4  1620.000000  2288.250000  
-
-[5 rows x 24 columns]
+          CS          BB           SO     BA    OBP    SLG    OPS           TB  
+0  25.578947  477.473684  1219.263158  0.245  0.315  0.382  0.697  2097.473684  
+1  24.300000  526.500000  1644.300000  0.244  0.316  0.437  0.753  2349.000000  
+2  45.000000  513.000000  1305.000000  0.269  0.337  0.473  0.810  2583.000000  
+3  25.578947  426.315789  1492.105263  0.254  0.316  0.422  0.738  2353.263158  
+4  10.125000  658.125000  1620.000000  0.244  0.344  0.431  0.776  2288.250000  
 </pre>
 </div>
 </div>
@@ -13998,15 +14182,17 @@ Time to cross-validate XGBClassifier = 0.005 min.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Calculate predictions: predictions</span>
-<span class="n">predictions_2020</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">DF_2020</span><span class="p">)</span>
-
-<span class="n">predictions_2020</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">predictions_2020</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions_2020</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DF_2020_1</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">DF_2020</span><span class="p">)</span>
+<span class="n">predictions_2020_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">DF_2020_1</span><span class="p">)</span>
+<span class="n">predictions_2020_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">DF_2020_1</span><span class="p">)</span>
+<span class="n">data_result</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Team&#39;</span><span class="p">:</span> <span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;Tm&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Probability&#39;</span><span class="p">:</span> <span class="n">predictions_2020_proba</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span>
+              <span class="s1">&#39;Prediction&#39;</span><span class="p">:</span> <span class="n">predictions_2020_pred</span><span class="p">}</span>
+<span class="n">prediction_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prediction_table</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14023,7 +14209,37 @@ Time to cross-validate XGBClassifier = 0.005 min.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0]
+<pre>   Team  Probability  Prediction
+0   ARI    31.150825           0
+1   ATL    17.553153           0
+2   BAL    53.163528           1
+3   BOS    12.661454           0
+4   CHC    83.040529           1
+5   CHW    17.058149           0
+6   CIN    43.136621           0
+7   CLE    11.326538           0
+8   COL    70.816525           1
+9   DET    13.061752           0
+10  HOU    60.793937           1
+11  KCR     3.868289           0
+12  LAA    50.827103           1
+13  LAD    57.108112           1
+14  MIA    27.250176           0
+15  MIL     4.160920           0
+16  MIN    30.270392           0
+17  NYM    77.672358           1
+18  NYY    87.175147           1
+19  OAK    47.563303           0
+20  PHI    90.666869           1
+21  PIT     1.140761           0
+22  SDP    24.507434           0
+23  SEA    10.759323           0
+24  SFG    14.734669           0
+25  STL     0.988297           0
+26  TBR    76.495594           1
+27  TEX     8.408854           0
+28  TOR     1.349251           0
+29  WSN     5.305377           0
 </pre>
 </div>
 </div>
@@ -14035,8 +14251,214 @@ Time to cross-validate XGBClassifier = 0.005 min.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Result">Result<a class="anchor-link" href="#Result">&#182;</a></h1><p>When trying to see which teams' offensive stats on 08/13/2020(normalized to 162 games) are worthy of getting into postseason on a traditional 10-team postseason format, it shows ARI, CIN, CLE, HOU, LAA, MIA, MIL, OAK, PIT, SEA, TEX.</p>
-<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>Though the list of teams might not be exactly the powerhouse of MLB on 8/13, but we have to keep in mind that this research only considered the offensive part of baseball.</p>
+<p>In order get more accurate result. I decided to adjust my model to only include the variables that are more significantly correlated to predicting the postseason birth.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Logistic Regression model from sklearn doesn't provide p-value automatically, so I turned to the logistic regression model from statsmodel to see which variables are less significantly correlated to predicting the postseason birth.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span> 
+<span class="n">log_reg</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">log_reg</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Optimization terminated successfully.
+         Current function value: 0.501195
+         Iterations 6
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                   POST   No. Observations:                  240
+Model:                          Logit   Df Residuals:                      226
+Method:                           MLE   Df Model:                           13
+Date:                Fri, 06 Nov 2020   Pseudo R-squ.:                  0.2126
+Time:                        17:41:51   Log-Likelihood:                -120.29
+converged:                       True   LL-Null:                       -152.76
+Covariance Type:            nonrobust   LLR p-value:                 6.723e-09
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+x1             1.3429      0.974      1.378      0.168      -0.567       3.252
+x2             3.2892      2.137      1.539      0.124      -0.900       7.478
+x3            -7.7348      5.924     -1.306      0.192     -19.346       3.877
+x4             0.0444      0.823      0.054      0.957      -1.568       1.657
+x5            -2.9628      2.257     -1.313      0.189      -7.386       1.461
+x6            -0.0494      0.209     -0.237      0.813      -0.459       0.360
+x7            -0.3901      0.230     -1.694      0.090      -0.842       0.061
+x8            -0.3932      0.764     -0.515      0.607      -1.890       1.104
+x9            -0.2961      0.239     -1.241      0.215      -0.764       0.172
+x10            6.4508      4.922      1.311      0.190      -3.195      16.097
+x11           -5.2292      4.448     -1.176      0.240     -13.947       3.489
+x12          -17.1446     10.577     -1.621      0.105     -37.875       3.586
+x13           17.7719     12.821      1.386      0.166      -7.356      42.900
+x14            4.6839      8.959      0.523      0.601     -12.875      22.243
+==============================================================================
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Judging from the p-value, I decided to use only those p-value under 0.18, which is PA, R, CS, SLG, OPS. A surprising discovery here is that HR(p=0.957) is wildly non-siginificantly correlated with postseason birth, which is a bit the contrary of what teams pursue recently.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X2</span> <span class="o">=</span> <span class="n">df_com</span><span class="p">[[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;CS&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">]]</span>
+<span class="n">Y2</span> <span class="o">=</span> <span class="n">df_com</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">]</span>
+<span class="n">X2</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+
+<span class="n">model2</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">)</span>
+<span class="n">model2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[14]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+                   intercept_scaling=1, l1_ratio=None, max_iter=100,
+                   multi_class=&#39;multinomial&#39;, n_jobs=None, penalty=&#39;l2&#39;,
+                   random_state=None, solver=&#39;lbfgs&#39;, tol=0.0001, verbose=0,
+                   warm_start=False)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DF_2020_2</span> <span class="o">=</span> <span class="n">DF_2020</span><span class="p">[[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;CS&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">]]</span>
+<span class="n">DF_2020_2</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">DF_2020_2</span><span class="p">)</span>
+<span class="n">predictions_2020_proba2</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">DF_2020_2</span><span class="p">)</span>
+<span class="n">predictions_2020_pred2</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">DF_2020_2</span><span class="p">)</span>
+<span class="n">data_result2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Team&#39;</span><span class="p">:</span> <span class="n">df_2020</span><span class="p">[</span><span class="s1">&#39;Tm&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Probability&#39;</span><span class="p">:</span> <span class="n">predictions_2020_proba2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span>
+              <span class="s1">&#39;Prediction&#39;</span><span class="p">:</span> <span class="n">predictions_2020_pred2</span><span class="p">}</span>
+<span class="n">prediction_table2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_result2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prediction_table2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Team  Probability  Prediction
+0   ARI    30.528836           0
+1   ATL    34.945587           0
+2   BAL    50.611437           1
+3   BOS    24.343055           0
+4   CHC    79.979493           1
+5   CHW    39.400260           0
+6   CIN    22.450180           0
+7   CLE     6.953635           0
+8   COL    81.358858           1
+9   DET    26.703734           0
+10  HOU    67.514209           1
+11  KCR     7.929352           0
+12  LAA    51.155164           1
+13  LAD    56.421238           1
+14  MIA    31.429079           0
+15  MIL     9.461973           0
+16  MIN    38.962639           0
+17  NYM    71.531353           1
+18  NYY    63.583383           1
+19  OAK    46.468942           0
+20  PHI    64.933070           1
+21  PIT     3.358363           0
+22  SDP    22.172423           0
+23  SEA    14.899682           0
+24  SFG    18.638615           0
+25  STL     1.257867           0
+26  TBR    71.328421           1
+27  TEX     5.664947           0
+28  TOR     3.660027           0
+29  WSN     2.925560           0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The list of teams were the same but there were slight differences for the probability value.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Result">Result<a class="anchor-link" href="#Result">&#182;</a></h1><p>The result was quite satisfying given the list of teams(BAL, CHC, COL, HOU, LAA, LAD, NYM, NYY, PHI, TBR) consumes most of the powerhouse of MLB, but we still have to keep in mind that this research only considered the batting part of stats and the stats on 8/13.</p>
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>The result was quite satisfying given the list of teams consumes most of the powerhouse of MLB, but we still have to keep in mind that this research only considered the batting part of stats and the stats on 8/13. In my last prediction model it only considered 'PA', 'R', 'CS', 'SLG', 'OPS', which may give us a look at what matters most in teams probability of getting into postseason.</p>
+<p>Prediction using classifiers other than Logistic Regression can be found here: <a href="https://github.com/Allen-Ho-0302/2020PostseasonPrediction-DeepLearning_XGBoost_ClassificationTree_LogisticRegression">https://github.com/Allen-Ho-0302/2020PostseasonPrediction-DeepLearning_XGBoost_ClassificationTree_LogisticRegression</a>.</p>
 
 </div>
 </div>
