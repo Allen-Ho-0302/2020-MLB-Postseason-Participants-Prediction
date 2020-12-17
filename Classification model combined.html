@@ -13503,7 +13503,7 @@ log loss</p>
 <span class="c1"># define classifier models</span>
 <span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">),</span>
-    <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">KNeighborsClassifier</span><span class="p">(),</span>
     <span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="n">DecisionTreeClassifier</span><span class="p">(),</span>
     <span class="n">RandomForestClassifier</span><span class="p">(),</span>
@@ -13614,13 +13614,28 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
-  warnings.warn(msg, category=FutureWarning)
-C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Time to cross-validate Logistic Regression = 0.009 min.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
@@ -13640,8 +13655,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Logistic Regression = 0.004 min.
-Time to cross-validate KNN = 0.002 min.
+<pre>Time to cross-validate KNN = 0.003 min.
 </pre>
 </div>
 </div>
@@ -13668,6 +13682,10 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
 </pre>
 </div>
 </div>
@@ -13678,7 +13696,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate SVM = 0.002 min.
+<pre>Time to cross-validate SVM = 0.006 min.
 Time to cross-validate Decision Tree = 0.002 min.
 </pre>
 </div>
@@ -13698,6 +13716,8 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
   warnings.warn(msg, category=FutureWarning)
 C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
   warnings.warn(msg, category=FutureWarning)
+C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function safe_indexing is deprecated; safe_indexing is deprecated in version 0.22 and will be removed in version 0.24.
+  warnings.warn(msg, category=FutureWarning)
 </pre>
 </div>
 </div>
@@ -13708,7 +13728,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Random Forest = 0.026 min.
+<pre>Time to cross-validate Random Forest = 0.061 min.
 </pre>
 </div>
 </div>
@@ -13739,7 +13759,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Gradient Boosting = 0.019 min.
+<pre>Time to cross-validate Gradient Boosting = 0.029 min.
 </pre>
 </div>
 </div>
@@ -13770,7 +13790,7 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate XGBClassifier = 0.009 min.
+<pre>Time to cross-validate XGBClassifier = 0.015 min.
 </pre>
 </div>
 </div>
@@ -13811,58 +13831,58 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
     <tr>
       <th>0</th>
       <td>Logistic Regression</td>
-      <td>0.718629</td>
-      <td>0.721875</td>
-      <td>0.827734</td>
-      <td>-0.536031</td>
+      <td>0.727067</td>
+      <td>0.728125</td>
+      <td>0.826953</td>
+      <td>-0.533989</td>
     </tr>
     <tr>
       <th>1</th>
       <td>KNN</td>
-      <td>0.658151</td>
-      <td>0.684375</td>
-      <td>0.824414</td>
-      <td>-0.578825</td>
+      <td>0.653692</td>
+      <td>0.659375</td>
+      <td>0.724414</td>
+      <td>-3.600277</td>
     </tr>
     <tr>
       <th>2</th>
       <td>SVM</td>
-      <td>0.647821</td>
-      <td>0.634375</td>
-      <td>0.742578</td>
-      <td>-0.609196</td>
+      <td>0.624776</td>
+      <td>0.618750</td>
+      <td>0.739844</td>
+      <td>-0.619171</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Decision Tree</td>
-      <td>0.671690</td>
-      <td>0.637500</td>
-      <td>0.637500</td>
-      <td>-11.225236</td>
+      <td>0.651017</td>
+      <td>0.621875</td>
+      <td>0.621875</td>
+      <td>-11.800892</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Random Forest</td>
-      <td>0.727879</td>
-      <td>0.712500</td>
-      <td>0.813672</td>
-      <td>-0.545912</td>
+      <td>0.730019</td>
+      <td>0.706250</td>
+      <td>0.798828</td>
+      <td>-0.539176</td>
     </tr>
     <tr>
       <th>5</th>
       <td>Gradient Boosting</td>
-      <td>0.708470</td>
-      <td>0.690625</td>
-      <td>0.780078</td>
-      <td>-0.679895</td>
+      <td>0.706371</td>
+      <td>0.687500</td>
+      <td>0.773828</td>
+      <td>-0.672079</td>
     </tr>
     <tr>
       <th>6</th>
       <td>XGBClassifier</td>
-      <td>0.734760</td>
-      <td>0.721875</td>
-      <td>0.785547</td>
-      <td>-0.617131</td>
+      <td>0.712687</td>
+      <td>0.709375</td>
+      <td>0.775781</td>
+      <td>-0.654405</td>
     </tr>
   </tbody>
 </table>
@@ -13922,12 +13942,12 @@ C:\Users\allen\anaconda3\lib\site-packages\sklearn\utils\deprecation.py:87: Futu
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to cross-validate Logistic Regression = 0.003 min.
-Time to cross-validate KNN = 0.002 min.
+<pre>Time to cross-validate Logistic Regression = 0.002 min.
+Time to cross-validate KNN = 0.001 min.
 Time to cross-validate SVM = 0.002 min.
 Time to cross-validate Decision Tree = 0.001 min.
-Time to cross-validate Random Forest = 0.035 min.
-Time to cross-validate Gradient Boosting = 0.018 min.
+Time to cross-validate Random Forest = 0.021 min.
+Time to cross-validate Gradient Boosting = 0.015 min.
 Time to cross-validate XGBClassifier = 0.005 min.
 </pre>
 </div>
@@ -13977,10 +13997,10 @@ Time to cross-validate XGBClassifier = 0.005 min.
     <tr>
       <th>1</th>
       <td>KNN</td>
-      <td>0.711105</td>
-      <td>0.675000</td>
-      <td>0.830469</td>
-      <td>-0.520010</td>
+      <td>0.668809</td>
+      <td>0.631250</td>
+      <td>0.739844</td>
+      <td>-2.568752</td>
     </tr>
     <tr>
       <th>2</th>
@@ -13988,31 +14008,31 @@ Time to cross-validate XGBClassifier = 0.005 min.
       <td>0.731454</td>
       <td>0.684375</td>
       <td>0.751563</td>
-      <td>-0.547907</td>
+      <td>-0.546522</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Decision Tree</td>
-      <td>0.674239</td>
-      <td>0.643750</td>
-      <td>0.643750</td>
-      <td>-10.937406</td>
+      <td>0.679634</td>
+      <td>0.650000</td>
+      <td>0.650000</td>
+      <td>-10.793494</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Random Forest</td>
-      <td>0.712223</td>
-      <td>0.675000</td>
-      <td>0.803516</td>
-      <td>-0.539415</td>
+      <td>0.713606</td>
+      <td>0.681250</td>
+      <td>0.808398</td>
+      <td>-0.537619</td>
     </tr>
     <tr>
       <th>5</th>
       <td>Gradient Boosting</td>
-      <td>0.723963</td>
-      <td>0.693750</td>
-      <td>0.792578</td>
-      <td>-0.626625</td>
+      <td>0.735821</td>
+      <td>0.706250</td>
+      <td>0.791016</td>
+      <td>-0.624170</td>
     </tr>
     <tr>
       <th>6</th>
@@ -14180,9 +14200,392 @@ Time to cross-validate XGBClassifier = 0.005 min.
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Try SVM model and perform hyperparameter tuning to see if it gives us better results.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span> 
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span> 
+
+<span class="n">model_svc</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> 
+                        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> 
+                <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.30</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">101</span><span class="p">)</span> 
+
+<span class="n">model_svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">preda</span><span class="o">=</span><span class="n">model_svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preda</span><span class="p">))</span>
+
+
+<span class="c1">#----------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>  
+              <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">],</span> 
+              <span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rbf&#39;</span><span class="p">]}</span>  
+  
+<span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">refit</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> 
+  
+<span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> 
+
+<span class="n">grid_predictions</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">grid_predictions</span><span class="p">))</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>              precision    recall  f1-score   support
+
+           0       0.75      0.87      0.80        47
+           1       0.65      0.44      0.52        25
+
+    accuracy                           0.72        72
+   macro avg       0.70      0.66      0.66        72
+weighted avg       0.71      0.72      0.71        72
+
+Fitting 5 folds for each of 25 candidates, totalling 125 fits
+[CV] C=0.1, gamma=1, kernel=rbf ......................................
+[CV] .......... C=0.1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=1, kernel=rbf ......................................
+[CV] .......... C=0.1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=1, kernel=rbf ......................................
+[CV] .......... C=0.1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=1, kernel=rbf ......................................
+[CV] .......... C=0.1, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=1, kernel=rbf ......................................
+[CV] .......... C=0.1, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=0.1, gamma=0.1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=0.1, gamma=0.1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=0.1, gamma=0.1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=0.1, gamma=0.1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=0.1, gamma=0.1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=0.1, gamma=0.01, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=0.1, gamma=0.01, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=0.1, gamma=0.01, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=0.1, gamma=0.01, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=0.1, gamma=0.01, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=0.1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=0.1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s remaining:    0.0s
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+[CV] C=0.1, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=0.1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=0.1, gamma=0.001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=0.1, gamma=0.001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=0.1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=0.1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=0.1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=0.1, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=0.1, gamma=0.0001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=0.1, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=0.1, gamma=0.0001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1, gamma=1, kernel=rbf ........................................
+[CV] ............ C=1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=1, kernel=rbf ........................................
+[CV] ............ C=1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=1, kernel=rbf ........................................
+[CV] ............ C=1, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=1, kernel=rbf ........................................
+[CV] ............ C=1, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1, gamma=1, kernel=rbf ........................................
+[CV] ............ C=1, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1, gamma=0.1, kernel=rbf ......................................
+[CV] .......... C=1, gamma=0.1, kernel=rbf, score=0.765, total=   0.0s
+[CV] C=1, gamma=0.1, kernel=rbf ......................................
+[CV] .......... C=1, gamma=0.1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=1, gamma=0.1, kernel=rbf ......................................
+[CV] .......... C=1, gamma=0.1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=1, gamma=0.1, kernel=rbf ......................................
+[CV] .......... C=1, gamma=0.1, kernel=rbf, score=0.758, total=   0.0s
+[CV] C=1, gamma=0.1, kernel=rbf ......................................
+[CV] .......... C=1, gamma=0.1, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=1, gamma=0.01, kernel=rbf .....................................
+[CV] ......... C=1, gamma=0.01, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=1, gamma=0.01, kernel=rbf .....................................
+[CV] ......... C=1, gamma=0.01, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=1, gamma=0.01, kernel=rbf .....................................
+[CV] ......... C=1, gamma=0.01, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=1, gamma=0.01, kernel=rbf .....................................
+[CV] ......... C=1, gamma=0.01, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=1, gamma=0.01, kernel=rbf .....................................
+[CV] ......... C=1, gamma=0.01, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=1, gamma=0.001, kernel=rbf ....................................
+[CV] ........ C=1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.001, kernel=rbf ....................................
+[CV] ........ C=1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.001, kernel=rbf ....................................
+[CV] ........ C=1, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.001, kernel=rbf ....................................
+[CV] ........ C=1, gamma=0.001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1, gamma=0.001, kernel=rbf ....................................
+[CV] ........ C=1, gamma=0.001, kernel=rbf, score=0.697, total=   0.0s
+[CV] C=1, gamma=0.0001, kernel=rbf ...................................
+[CV] ....... C=1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.0001, kernel=rbf ...................................
+[CV] ....... C=1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.0001, kernel=rbf ...................................
+[CV] ....... C=1, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1, gamma=0.0001, kernel=rbf ...................................
+[CV] ....... C=1, gamma=0.0001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1, gamma=0.0001, kernel=rbf ...................................
+[CV] ....... C=1, gamma=0.0001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=10, gamma=1, kernel=rbf .......................................
+[CV] ........... C=10, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=10, gamma=1, kernel=rbf .......................................
+[CV] ........... C=10, gamma=1, kernel=rbf, score=0.647, total=   0.0s
+[CV] C=10, gamma=1, kernel=rbf .......................................
+[CV] ........... C=10, gamma=1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=10, gamma=1, kernel=rbf .......................................
+[CV] ........... C=10, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=10, gamma=1, kernel=rbf .......................................
+[CV] ........... C=10, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=10, gamma=0.1, kernel=rbf .....................................
+[CV] ......... C=10, gamma=0.1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=10, gamma=0.1, kernel=rbf .....................................
+[CV] ......... C=10, gamma=0.1, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=10, gamma=0.1, kernel=rbf .....................................
+[CV] ......... C=10, gamma=0.1, kernel=rbf, score=0.618, total=   0.0s
+[CV] C=10, gamma=0.1, kernel=rbf .....................................
+[CV] ......... C=10, gamma=0.1, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=10, gamma=0.1, kernel=rbf .....................................
+[CV] ......... C=10, gamma=0.1, kernel=rbf, score=0.545, total=   0.0s
+[CV] C=10, gamma=0.01, kernel=rbf ....................................
+[CV] ........ C=10, gamma=0.01, kernel=rbf, score=0.882, total=   0.0s
+[CV] C=10, gamma=0.01, kernel=rbf ....................................
+[CV] ........ C=10, gamma=0.01, kernel=rbf, score=0.824, total=   0.0s
+[CV] C=10, gamma=0.01, kernel=rbf ....................................
+[CV] ........ C=10, gamma=0.01, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=10, gamma=0.01, kernel=rbf ....................................
+[CV] ........ C=10, gamma=0.01, kernel=rbf, score=0.818, total=   0.0s
+[CV] C=10, gamma=0.01, kernel=rbf ....................................
+[CV] ........ C=10, gamma=0.01, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=10, gamma=0.001, kernel=rbf ...................................
+[CV] ....... C=10, gamma=0.001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=10, gamma=0.001, kernel=rbf ...................................
+[CV] ....... C=10, gamma=0.001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=10, gamma=0.001, kernel=rbf ...................................
+[CV] ....... C=10, gamma=0.001, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=10, gamma=0.001, kernel=rbf ...................................
+[CV] ....... C=10, gamma=0.001, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=10, gamma=0.001, kernel=rbf ...................................
+[CV] ....... C=10, gamma=0.001, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=10, gamma=0.0001, kernel=rbf ..................................
+[CV] ...... C=10, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=10, gamma=0.0001, kernel=rbf ..................................
+[CV] ...... C=10, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=10, gamma=0.0001, kernel=rbf ..................................
+[CV] ...... C=10, gamma=0.0001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=10, gamma=0.0001, kernel=rbf ..................................
+[CV] ...... C=10, gamma=0.0001, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=10, gamma=0.0001, kernel=rbf ..................................
+[CV] ...... C=10, gamma=0.0001, kernel=rbf, score=0.697, total=   0.0s
+[CV] C=100, gamma=1, kernel=rbf ......................................
+[CV] .......... C=100, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=100, gamma=1, kernel=rbf ......................................
+[CV] .......... C=100, gamma=1, kernel=rbf, score=0.647, total=   0.0s
+[CV] C=100, gamma=1, kernel=rbf ......................................
+[CV] .......... C=100, gamma=1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=100, gamma=1, kernel=rbf ......................................
+[CV] .......... C=100, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=100, gamma=1, kernel=rbf ......................................
+[CV] .......... C=100, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=100, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=100, gamma=0.1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=100, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=100, gamma=0.1, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=100, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=100, gamma=0.1, kernel=rbf, score=0.559, total=   0.0s
+[CV] C=100, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=100, gamma=0.1, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=100, gamma=0.1, kernel=rbf ....................................
+[CV] ........ C=100, gamma=0.1, kernel=rbf, score=0.485, total=   0.0s
+[CV] C=100, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=100, gamma=0.01, kernel=rbf, score=0.824, total=   0.0s
+[CV] C=100, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=100, gamma=0.01, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=100, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=100, gamma=0.01, kernel=rbf, score=0.706, total=   0.0s
+[CV] C=100, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=100, gamma=0.01, kernel=rbf, score=0.848, total=   0.0s
+[CV] C=100, gamma=0.01, kernel=rbf ...................................
+[CV] ....... C=100, gamma=0.01, kernel=rbf, score=0.606, total=   0.0s
+[CV] C=100, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=100, gamma=0.001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=100, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=100, gamma=0.001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=100, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=100, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=100, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=100, gamma=0.001, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=100, gamma=0.001, kernel=rbf ..................................
+[CV] ...... C=100, gamma=0.001, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=100, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=100, gamma=0.0001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=100, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=100, gamma=0.0001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=100, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=100, gamma=0.0001, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=100, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=100, gamma=0.0001, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=100, gamma=0.0001, kernel=rbf .................................
+[CV] ..... C=100, gamma=0.0001, kernel=rbf, score=0.636, total=   0.0s
+[CV] C=1000, gamma=1, kernel=rbf .....................................
+[CV] ......... C=1000, gamma=1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1000, gamma=1, kernel=rbf .....................................
+[CV] ......... C=1000, gamma=1, kernel=rbf, score=0.647, total=   0.0s
+[CV] C=1000, gamma=1, kernel=rbf .....................................
+[CV] ......... C=1000, gamma=1, kernel=rbf, score=0.735, total=   0.0s
+[CV] C=1000, gamma=1, kernel=rbf .....................................
+[CV] ......... C=1000, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1000, gamma=1, kernel=rbf .....................................
+[CV] ......... C=1000, gamma=1, kernel=rbf, score=0.667, total=   0.0s
+[CV] C=1000, gamma=0.1, kernel=rbf ...................................
+[CV] ....... C=1000, gamma=0.1, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1000, gamma=0.1, kernel=rbf ...................................
+[CV] ....... C=1000, gamma=0.1, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=1000, gamma=0.1, kernel=rbf ...................................
+[CV] ....... C=1000, gamma=0.1, kernel=rbf, score=0.559, total=   0.0s
+[CV] C=1000, gamma=0.1, kernel=rbf ...................................
+[CV] ....... C=1000, gamma=0.1, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=1000, gamma=0.1, kernel=rbf ...................................
+[CV] ....... C=1000, gamma=0.1, kernel=rbf, score=0.485, total=   0.0s
+[CV] C=1000, gamma=0.01, kernel=rbf ..................................
+[CV] ...... C=1000, gamma=0.01, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=1000, gamma=0.01, kernel=rbf ..................................
+[CV] ...... C=1000, gamma=0.01, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=1000, gamma=0.01, kernel=rbf ..................................
+[CV] ...... C=1000, gamma=0.01, kernel=rbf, score=0.706, total=   0.0s
+[CV] C=1000, gamma=0.01, kernel=rbf ..................................
+[CV] ...... C=1000, gamma=0.01, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=1000, gamma=0.01, kernel=rbf ..................................
+[CV] ...... C=1000, gamma=0.01, kernel=rbf, score=0.545, total=   0.0s
+[CV] C=1000, gamma=0.001, kernel=rbf .................................
+[CV] ..... C=1000, gamma=0.001, kernel=rbf, score=0.794, total=   0.0s
+[CV] C=1000, gamma=0.001, kernel=rbf .................................
+[CV] ..... C=1000, gamma=0.001, kernel=rbf, score=0.824, total=   0.0s
+[CV] C=1000, gamma=0.001, kernel=rbf .................................
+[CV] ..... C=1000, gamma=0.001, kernel=rbf, score=0.676, total=   0.0s
+[CV] C=1000, gamma=0.001, kernel=rbf .................................
+[CV] ..... C=1000, gamma=0.001, kernel=rbf, score=0.879, total=   0.0s
+[CV] C=1000, gamma=0.001, kernel=rbf .................................
+[CV] ..... C=1000, gamma=0.001, kernel=rbf, score=0.606, total=   0.0s
+[CV] C=1000, gamma=0.0001, kernel=rbf ................................
+[CV] .... C=1000, gamma=0.0001, kernel=rbf, score=0.853, total=   0.0s
+[CV] C=1000, gamma=0.0001, kernel=rbf ................................
+[CV] .... C=1000, gamma=0.0001, kernel=rbf, score=0.882, total=   0.0s
+[CV] C=1000, gamma=0.0001, kernel=rbf ................................
+[CV] .... C=1000, gamma=0.0001, kernel=rbf, score=0.706, total=   0.0s
+[CV] C=1000, gamma=0.0001, kernel=rbf ................................
+[CV] .... C=1000, gamma=0.0001, kernel=rbf, score=0.788, total=   0.0s
+[CV] C=1000, gamma=0.0001, kernel=rbf ................................
+[CV] .... C=1000, gamma=0.0001, kernel=rbf, score=0.636, total=   0.0s
+              precision    recall  f1-score   support
+
+           0       0.73      0.87      0.80        47
+           1       0.62      0.40      0.49        25
+
+    accuracy                           0.71        72
+   macro avg       0.68      0.64      0.64        72
+weighted avg       0.69      0.71      0.69        72
+
+{&#39;C&#39;: 10, &#39;gamma&#39;: 0.001, &#39;kernel&#39;: &#39;rbf&#39;}
+SVC(C=10, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape=&#39;ovr&#39;, degree=3, gamma=0.001, kernel=&#39;rbf&#39;,
+    max_iter=-1, probability=True, random_state=None, shrinking=True, tol=0.001,
+    verbose=False)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=1)]: Done 125 out of 125 | elapsed:    1.3s finished
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Apparently hyperparameter tuning does not help in this case. Thus perform prediction using the old logistic regression model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">DF_2020_1</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">DF_2020</span><span class="p">)</span>
@@ -14266,7 +14669,7 @@ Time to cross-validate XGBClassifier = 0.005 min.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span> 
@@ -14296,8 +14699,8 @@ Time to cross-validate XGBClassifier = 0.005 min.
 Dep. Variable:                   POST   No. Observations:                  240
 Model:                          Logit   Df Residuals:                      226
 Method:                           MLE   Df Model:                           13
-Date:                Fri, 06 Nov 2020   Pseudo R-squ.:                  0.2126
-Time:                        17:41:51   Log-Likelihood:                -120.29
+Date:                Wed, 16 Dec 2020   Pseudo R-squ.:                  0.2126
+Time:                        22:21:42   Log-Likelihood:                -120.29
 converged:                       True   LL-Null:                       -152.76
 Covariance Type:            nonrobust   LLR p-value:                 6.723e-09
 ==============================================================================
@@ -14336,7 +14739,7 @@ x14            4.6839      8.959      0.523      0.601     -12.875      22.243
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X2</span> <span class="o">=</span> <span class="n">df_com</span><span class="p">[[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;CS&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">]]</span>
@@ -14357,7 +14760,7 @@ x14            4.6839      8.959      0.523      0.601     -12.875      22.243
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -14378,7 +14781,7 @@ x14            4.6839      8.959      0.523      0.601     -12.875      22.243
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">DF_2020_2</span> <span class="o">=</span> <span class="n">DF_2020</span><span class="p">[[</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;CS&#39;</span><span class="p">,</span> <span class="s1">&#39;SLG&#39;</span><span class="p">,</span> <span class="s1">&#39;OPS&#39;</span><span class="p">]]</span>
